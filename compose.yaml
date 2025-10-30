@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  mqtt:
+    image: eclipse-mosquitto
+    container_name: mqtt
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config:rw
+      - ./mosquitto/data:/mosquitto/data:rw
+      - ./mosquitto/log:/mosquitto/log:rw
+    restart: unless-stopped
+    networks:
+      - mqtt-network
+    user: "${MOSQUITTO_UID:-1883}:${MOSQUITTO_GID:-1883}"
+
+  mqtt-buttons:
+    build: .
+    container_name: mqtt-buttons
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on: 
+      - mqtt
+    restart: unless-stopped
+    network_mode: host
+
+networks:
+    mqtt-network:
+      driver: bridge
