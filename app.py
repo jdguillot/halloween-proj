@@ -65,13 +65,13 @@ def index():
 
 @app.route('/button1', methods=['POST'])
 def button1():
-    success = send_mqtt_message('COMMAND_1')
-    return jsonify({'success': success, 'command': 'COMMAND_1'})
+    success = send_mqtt_message('COMMAND_LIGHT')
+    return jsonify({'success': success, 'command': 'COMMAND_LIGHT'})
 
 @app.route('/button2', methods=['POST'])
 def button2():
-    success = send_mqtt_message('COMMAND_2')
-    return jsonify({'success': success, 'command': 'COMMAND_2'})
+    success = send_mqtt_message('COMMAND_FAN')
+    return jsonify({'success': success, 'command': 'COMMAND_FAN'})
 
 if __name__ == '__main__':
     # Wait for MQTT broker to be ready
