@@ -9,7 +9,7 @@ app = Flask(__name__)
 # MQTT Configuration
 MQTT_BROKER = os.getenv('MQTT_BROKER', 'localhost')
 MQTT_PORT = int(os.getenv('MQTT_PORT', 1883))
-MQTT_TOPIC = os.getenv('MQTT_TOPIC', 'home/buttons')
+MQTT_TOPIC = os.getenv('MQTT_TOPIC', 'halloween/buttons')
 MQTT_USERNAME = os.getenv('MQTT_USERNAME', 'username')
 MQTT_PASSWORD = os.getenv('MQTT_PASSWORD', 'changeme')
 
