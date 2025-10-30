@@ -12,6 +12,8 @@ env/
 ENV/
 
 # ESPHome
+# The esphome container auto adds this but I've covered it in my main .gitignore
+esphome/config/.gitignore
 .esphome/
 secrets.yaml
 
