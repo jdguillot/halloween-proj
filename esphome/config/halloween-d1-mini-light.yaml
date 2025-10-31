@@ -1,0 +1,48 @@
+esphome:
+  name: halloween-d1-mini-light
+  friendly_name: halloween-d1-mini-light
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Halloween-D1-Mini-Light"
+    password: !secret ap_password
+
+# MQTT Configuration
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+  # Subscribe to the halloween/buttons topic
+  on_message:
+    - topic: halloween/buttons
+      then:
+        - lambda: |-
+            std::string message(x.c_str());
+            if (message == "COMMAND_LIGHT") {
+              // Toggle the output
+              id(halloween_output).toggle();
+            }
+
+# GPIO switch that can be toggled
+switch:
+  - platform: gpio
+    name: "Halloween Output"
+    id: halloween_output
+    pin: GPIO5  # D1 pin on D1 Mini - change to your desired pin
+    restore_mode: RESTORE_DEFAULT_OFF
